@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    font-family: 'Scandia Regular';
+}
+
+@font-face {
+    font-family: 'Scandia Regular';
+    src: local('Scandia Regular'), local('Scandia-Regular'),
+        url('./fonts/Scandia-Regular.woff2') format('woff2'),
+        url('./fonts/Scandia-Regular.woff') format('woff'),
+        url('./fonts/Scandia-Regular.ttf') format('truetype');
+
+}
+
+@font-face {
+    font-family: 'Scandia Medium';
+    src: local('Scandia Medium'), local('Scandia-Medium'),
+        url('./fonts/Scandia-Medium.woff2') format('woff2'),
+        url('./fonts/Scandia-Medium.woff') format('woff'),
+        url('./fonts/Scandia-Medium.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Scandia Bold';
+    src: local('Scandia Bold'), local('Scandia-Bold'),
+        url('./fonts/Scandia-Bold.woff2') format('woff2'),
+        url('./fonts/Scandia-Bold.woff') format('woff'),
+        url('./fonts/Scandia-Bold.ttf') format('truetype');
+}

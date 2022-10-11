@@ -4,25 +4,34 @@ import axios from "axios";
 const Shortner = () => {
   const [userInput, setUserInput] = useState("");
   const [shortLink, setShortLink] = useState("");
-
+  const [showNotification, setShowNotification] = useState("");
+  const [show, setShow] = useState("");
   const fetchData = async () => {
     try {
       const response = await axios(
         `https://api.shrtco.de/v2/shorten?url=${userInput}`
       );
       setShortLink(response.data.result.full_short_link);
+      setShow(true);
     } catch (err) {
       console.log(err);
     }
   };
-
+  const handleCopyClick = () => {
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 3000);
+    navigator.clipboard.writeText(shortLink);
+  };
   return (
-    <div className="bg-[#0B1736] py-20">
+    <div className="bg-[#0B1736] py-20 relative">
       <div className="container mx-auto px-5">
         <h2 className="text-white text-4xl text-center pb-10">
           Paste the URL to be shortened
         </h2>
-        <div className=" flex justify-between items-center flex-col md:flex-row gap-3 md:gap-0 ">
+        <div
+          className=" flex justify-between items-center flex-col md:flex-row gap-3 md:gap-0 "
+          id="shortinput"
+        >
           <input
             type="text"
             placeholder="Paste your link here..."
@@ -39,26 +48,31 @@ const Shortner = () => {
         </div>
 
         {/* should come when clicked in shorten link */}
-        <div className="pt-12 ">
-          <div className="bg-white rounded-md px-8 py-8 w-full flex justify-between items-center flex-col md:flex-row">
-            <input
-              type="text"
-              className="focus:outline-none  w-full md:w-[85%] py-3 text-[#2B5AD7] pl-3"
-              value={shortLink}
-              disabled
-              onChange={(e) => setShortLink(e.target.value)}
-            />
-            <button
-              className="bg-[#EDF2FE] rounded-md px-5 py-3 text-[#1A3887] float-right w-full md:w-[15%] border-[#1A3887] border"
-              onClick={() => {
-                navigator.clipboard.writeText(shortLink);
-              }}
-            >
-              {" "}
-              Copy
-            </button>
+        {show ? (
+          <div className="pt-12 relative flex justify-center">
+            <div className="bg-white rounded-md px-8 py-8 w-full flex justify-between items-center flex-col md:flex-row">
+              <input
+                type="text"
+                className="focus:outline-none  w-full md:w-[85%] py-3 text-[#2B5AD7] pl-3"
+                value={shortLink}
+                disabled
+                onChange={(e) => setShortLink(e.target.value)}
+              />
+              <button
+                className="bg-[#EDF2FE] rounded-md px-5 py-3 text-[#1A3887] float-right w-full md:w-[15%] border-[#1A3887] border"
+                onClick={handleCopyClick}
+              >
+                {" "}
+                Copy
+              </button>
+            </div>
+            {showNotification && (
+              <div className="absolute bottom-2 text-sm text-[#3db54b]">
+                Copy to Clipboard!
+              </div>
+            )}
           </div>
-        </div>
+        ) : null}
       </div>
     </div>
   );
